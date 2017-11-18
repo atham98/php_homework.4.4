@@ -1,18 +1,23 @@
 <?php
-    require_once 'db_connect.php';
-    $table_name = $_GET['tablename'];
+error_reporting(E_ALL);
 
-    if(!empty($table_name) && $_GET['action'] == 'showstructure'){
-        $query_show_structure = "DESCRIBE $table_name";
-        $statement = $link->prepare($query_show_structure);
+    require_once 'db_connect.php';
+    if(!isset($_GET['table_index'])){
+        header('Location:index.php');
+    }
+    if(!empty($_GET['table_index']) && $_GET['action'] == 'showstructure'){
+        $eee = $_GET['table_index'];
+        $statement = $link->prepare("DESCRIBE $eee");
         $statement->execute();
     }
+
     $result = [];
-?><!doctype html>
+?>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title><?= $table_name?></title>
+    <title><?= isset($_GET['table_index'])?></title>
     <style>
         table{
             border-collapse: collapse;
@@ -25,29 +30,29 @@
 </head>
 <body>
 
-    <?php while($row = $statement->fetch(PDO::FETCH_ASSOC)): ?>
-        <?php
-        $result[] = $row;
-        ?>
-    <?php endwhile ?>
-    <table>
-        <caption><?= $table_name?></caption>
-        <tr>
-            <th>Поле</th>
-            <th>Тип</th>
-            <th>Null</th>
-            <th>Индекс</th>
-            <th>По умолчанию</th>
-        </tr>
-        <?php foreach($result as $row) : ?>
+    <?php if(isset($_GET['table_index'])): ?>
+        <?php while($row = $statement->fetch(PDO::FETCH_ASSOC)): ?>
+            <?php $result[] = $row; ?>
+        <?php endwhile;?>
+        <table>
+            <caption><?= $_GET['table_index']?></caption>
             <tr>
-                <td><?= $row['Field']?></td>
-                <td><?= $row['Type']?></td>
-                <td><?= $row['Null']?></td>
-                <td><?= $row['Key']?></td>
-                <td><?= $row['Default']?></td>
+                <th>Поле</th>
+                <th>Тип</th>
+                <th>Null</th>
+                <th>Индекс</th>
+                <th>По умолчанию</th>
             </tr>
-        <?php endforeach ?>
+            <?php foreach($result as $row) : ?>
+                <tr>
+                    <td><?= $row['Field']?></td>
+                    <td><?= $row['Type']?></td>
+                    <td><?= $row['Null']?></td>
+                    <td><?= $row['Key']?></td>
+                    <td><?= $row['Default']?></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </table>
 
 </body>
