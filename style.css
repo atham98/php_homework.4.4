@@ -1,0 +1,50 @@
+/* index.php */
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+form label{
+    display: block;
+}
+textarea{
+    width: 50%;
+    min-height: 200px;
+    max-width: 500px;
+}
+.button{
+    font-size: 20px;
+    color: slategrey;
+}
+.button:hover{
+    text-decoration: underline;
+}
+div.tables{
+    display: flex;
+    flex-wrap: wrap;
+    border: 2px solid #ccc;
+    max-width: 725px;
+    width: 50%;;
+}
+div.tables div.edit{
+    display: flex;
+    margin: 10px;
+    border: solid 1px #eee;
+    padding: 5px;
+}
+.tb_name{
+    font-weight: bold;
+    font-family: Arial ;
+}
+/* table.php*/
+table{
+    border-collapse: collapse;
+    width: 50%;
+    height: auto;
+    max-width: 1000px;
+}
+tr, td, th{
+    border: 1px solid black;
+    padding: 7px;
+}
